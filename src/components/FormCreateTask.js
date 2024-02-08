@@ -53,7 +53,6 @@ const FormCreateTask = ({
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          max={20}
         />
       </label>
       <label className="grid grid-cols-2 mb-4 items-center">

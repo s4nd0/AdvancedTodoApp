@@ -25,9 +25,9 @@ const ThemeModeComponent = ({ setDarkTheme, darkTheme, osIsDark }) => {
   };
 
   return (
-    <div className="relative pl-12 sm:pl-16">
+    <div className="relative pl-14 sm:pl-18">
       <img
-        className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 cursor-pointer dark:invert border-2 border-black box-border rounded hover:rounded-xl"
+        className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 cursor-pointer dark:invert box-border"
         onClick={() => setShowMenu((prevShowMenu) => !prevShowMenu)}
         src={darkTheme ? DarkModeIcon : LightModeIcon}
         alt={darkTheme ? "dark-mode-icon" : "light-mode-icon"}

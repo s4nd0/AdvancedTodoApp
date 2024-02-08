@@ -4,7 +4,7 @@ const HiddenMenu = ({ isOpen, options, handleClick }) => {
   return (
     <>
       {isOpen && (
-        <ul className="absolute overflow-hidden rounded-lg py-2 drop-shadow-md w-full mt-6 left-0 text-left text-black dark:text-white bg-gray-100 dark:bg-slate-700">
+        <ul className="absolute overflow-hidden rounded-lg py-2 drop-shadow-md w-full mt-6 left-0 text-left text-black dark:text-white bg-gray-100 dark:bg-slate-700 border-2 border-gray-600">
           {options &&
             options.map((item) => (
               <li
