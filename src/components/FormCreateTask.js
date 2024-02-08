@@ -1,0 +1,122 @@
+import React, { useState } from "react";
+
+// icons
+import ToggleIcon from "../icons/ToggleIcon.svg";
+import ImgButton from "./ImgButton";
+import Button from "./Button";
+import ErrorText from "./ErrorText";
+
+const FormCreateTask = ({
+  setName,
+  name,
+  setRange,
+  range,
+  setDetails,
+  details,
+  setDate,
+  date,
+  setExactDay,
+  exactDay,
+}) => {
+  const [error, setError] = useState(null);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError(false);
+
+    if (name && date) {
+      // submit logic
+      const task = {
+        name,
+        date,
+        exactDay,
+        importance: range,
+        details,
+      };
+      console.log(task);
+    } else {
+      setError("Error: Invalid data in the form");
+    }
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-col p-4 m-4 rounded-md bg-gray-200 dark:bg-gray-700 shadow-lg sm:order-1"
+    >
+      <h2 className="text-2xl mb-4">Create Task</h2>
+      <label className="grid grid-cols-2 mb-4 items-center">
+        <span>Task name:</span>
+        <input
+          className="p-2 rounded-xl dark:bg-gray-800"
+          placeholder="name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          max={20}
+        />
+      </label>
+      <label className="grid grid-cols-2 mb-4 items-center">
+        <span>Date</span>
+        <input
+          className="p-2 rounded-xl dark:bg-gray-800"
+          type="date"
+          onChange={(e) => setDate(e.target.value)}
+          value={date}
+        />
+      </label>
+      <label className="grid grid-cols-2 mb-4 items-center">
+        <span>Completed that day:</span>
+        <div className="flex flex-row items-center gap-2 mx-auto">
+          <p
+            className={`${
+              exactDay ? "text-green-400" : "text-gray-500"
+            } font-bold`}
+          >
+            Yes
+          </p>
+          <ImgButton
+            src={ToggleIcon}
+            alt="toggle-icon-button"
+            onClick={() => setExactDay((prevExactDay) => !prevExactDay)}
+            turned={exactDay}
+          />
+          <p
+            className={`${
+              !exactDay ? "text-green-400" : "text-gray-600"
+            } font-bold`}
+          >
+            No
+          </p>
+        </div>
+      </label>
+      <label className="grid grid-cols-2 mb-6">
+        <span>Importance (1-5):</span>
+        <input
+          className="cursor-pointer"
+          type="range"
+          min={1}
+          max={5}
+          value={range}
+          onChange={(e) => setRange(e.target.value)}
+        />
+      </label>
+      <label className="grid grid-cols-2 mb-4">
+        <span>Task details:</span>
+        <textarea
+          value={details}
+          onChange={(e) => setDetails(e.target.value)}
+          placeholder="details"
+          className="p-2 resize-none rounded-xl dark:bg-gray-800"
+          name="details"
+          id="task-details"
+          rows="4"
+        ></textarea>
+      </label>
+      {error && <ErrorText text={error} />}
+      <Button text={`Create task!`} />
+    </form>
+  );
+};
+
+export default FormCreateTask;
