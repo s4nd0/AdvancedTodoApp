@@ -1,10 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // icons
 import ToggleIcon from "../icons/ToggleIcon.svg";
 import ImgButton from "./ImgButton";
 import Button from "./Button";
 import ErrorText from "./ErrorText";
+
+// hooks
+import { useAuthContext } from "../hooks/useAuthContext";
+
+// firebase imports
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 const FormCreateTask = ({
   setName,
@@ -19,23 +27,39 @@ const FormCreateTask = ({
   exactDay,
 }) => {
   const [error, setError] = useState(null);
+  const [isPending, setIsPending] = useState(false);
 
-  const handleSubmit = (e) => {
+  const { user } = useAuthContext();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
 
     if (name && date) {
       // submit logic
-      const task = {
-        name,
-        date,
-        exactDay,
-        importance: range,
-        details,
-      };
-      console.log(task);
+      setIsPending(true);
+      const time = new Date(date);
+      time.setHours(time.getHours() + 24);
+      const deadline = Timestamp.fromDate(time);
+      try {
+        await addDoc(collection(db, "tasks"), {
+          uid: user.uid,
+          name,
+          date: deadline,
+          exactDay,
+          range,
+          details,
+        });
+        setIsPending(false);
+        navigate("/tasks");
+      } catch (err) {
+        setError(err);
+        setIsPending(false);
+      }
     } else {
       setError("Error: Invalid data in the form");
+      setIsPending(false);
     }
   };
 
@@ -97,7 +121,7 @@ const FormCreateTask = ({
           min={1}
           max={5}
           value={range}
-          onChange={(e) => setRange(e.target.value)}
+          onChange={(e) => setRange(Number(e.target.value))}
         />
       </label>
       <label className="grid grid-cols-2 mb-4">
@@ -113,7 +137,10 @@ const FormCreateTask = ({
         ></textarea>
       </label>
       {error && <ErrorText text={error} />}
-      <Button text={`Create task!`} />
+      <Button
+        text={!isPending ? `Create task!` : `Creating...`}
+        loading={isPending}
+      />
     </form>
   );
 };

@@ -63,7 +63,7 @@ const FormSignup = () => {
       </label>
       {signupError && <ErrorText text={signupError} />}
       {error && !signupError && <ErrorText text={error} />}
-      <Button text={`Sing up`} loading={isPending} />
+      <Button text={!isPending ? `Sing up` : ""} loading={isPending} />
     </form>
   );
 };

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 // components
 import FormCreateTask from "../components/FormCreateTask";
-import FormRecentTasks from "../components/FormRecentTasks";
 import Task from "../components/Task";
+import MainText from "../components/MainText";
 
 const Create = () => {
   const [name, setName] = useState("");
@@ -14,14 +14,17 @@ const Create = () => {
 
   return (
     <div className="sm:grid sm:grid-cols-2">
-      <Task
-        preview={true}
-        name={name}
-        range={range}
-        details={details}
-        date={date}
-        exactDay={exactDay}
-      />
+      <div className="sm:order-2">
+        <MainText text={<i>Preview of your task</i>} />
+        <Task
+          name={name}
+          range={range}
+          details={details}
+          date={date}
+          exactDay={exactDay}
+          preview={true}
+        />
+      </div>
       <FormCreateTask
         setName={setName}
         name={name}

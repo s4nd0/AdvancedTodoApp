@@ -6,7 +6,13 @@ module.exports = {
     fontFamily: {
       protest: ["Protest Strike", "sans-serif"],
     },
-    extend: {},
+    extend: {
+      invert: {
+        25: ".25",
+        50: ".5",
+        75: ".75",
+      },
+    },
   },
   plugins: [],
 };

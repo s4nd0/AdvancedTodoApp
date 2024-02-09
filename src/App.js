@@ -27,9 +27,9 @@ function App() {
       {authIsReady && (
         <BrowserRouter scrollRestoration="auto">
           <div
-            className={`m-0 p-0 flex flex-col ease-out duration-100 min-h-screen  ${
-              darkTheme && "dark bg-gray-800 text-white"
-            }  bg-white text-black`}
+            className={`m-0 p-0 flex flex-col ease-out duration-100 overflow-hidden min-h-screen  ${
+              darkTheme ? "dark bg-gray-800 text-white" : "bg-white text-black"
+            }`}
           >
             <Header setDarkTheme={setDarkTheme} darkTheme={darkTheme} />
             <main className="flex-1 max-w-screen-lg w-full mx-auto">

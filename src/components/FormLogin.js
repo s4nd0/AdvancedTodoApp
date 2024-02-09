@@ -43,7 +43,7 @@ const FormLogin = () => {
         />
       </label>
       {error && <ErrorText text={error} />}
-      <Button text={`Log in`} loading={isPending} />
+      <Button text={!isPending ? `Log in` : ``} loading={isPending} />
     </form>
   );
 };
