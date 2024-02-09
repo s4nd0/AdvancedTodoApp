@@ -13,8 +13,10 @@ import Task from "../components/Task";
 import FilterComponent from "../components/FilterComponent";
 
 const Tasks = () => {
-  const [range, setRange] = useState(5);
   const [activeFilter, setActiveFilter] = useState(false);
+  const [range, setRange] = useState(5);
+  const [activeRange, setActiveRange] = useState(false);
+  const [showCompleted, setShowCompleted] = useState(false);
 
   const { user } = useAuthContext();
   const navigate = useNavigate();
@@ -32,19 +34,45 @@ const Tasks = () => {
           <FilterComponent
             setRange={setRange}
             range={range}
+            setActiveRange={setActiveRange}
+            activeRange={activeRange}
             setActive={setActiveFilter}
             active={activeFilter}
+            setShowCompleted={setShowCompleted}
+            showCompleted={showCompleted}
           />
           <div className="sm:grid sm:grid-cols-2">
             <div>
               {documents &&
                 documents.map((item) => {
-                  if (activeFilter) {
-                    if (range === item.range) {
-                      return <Task key={item.id} {...item} />;
+                  if (activeRange) {
+                    if (showCompleted) {
+                      if (range === item.range && item.completed) {
+                        return <Task key={item.id} {...item} />;
+                      } else {
+                        return null;
+                      }
+                    } else {
+                      if (range === item.range && !item.completed) {
+                        return <Task key={item.id} {...item} />;
+                      } else {
+                        return null;
+                      }
                     }
                   } else {
-                    return <Task key={item.id} {...item} />;
+                    if (showCompleted) {
+                      if (item.completed) {
+                        return <Task key={item.id} {...item} />;
+                      } else {
+                        return null;
+                      }
+                    } else {
+                      if (!item.completed) {
+                        return <Task key={item.id} {...item} />;
+                      } else {
+                        return null;
+                      }
+                    }
                   }
                 })}
             </div>
@@ -56,7 +84,7 @@ const Tasks = () => {
           </div>
         </>
       )}
-      {isPending && <LoadingComponent />}
+      {isPending && <LoadingComponent padding={true} />}
       {error && <MainText text={error} />}
     </>
   );

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 // components
 import ImgButton from "./ImgButton";
-import Button from "./Button";
 
 // icons
 import CompleteIcon from "../icons/CompleteIcon.svg";
@@ -12,7 +11,16 @@ import DeleteIcon from "../icons/DeleteIcon.svg";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/config";
 
-const Task = ({ name, range, details, date, exactDay, preview, id }) => {
+const Task = ({
+  name,
+  range,
+  details,
+  date,
+  exactDay,
+  preview,
+  id,
+  completed,
+}) => {
   const [importance, setImportance] = useState("");
 
   const styles1 =
@@ -66,7 +74,7 @@ const Task = ({ name, range, details, date, exactDay, preview, id }) => {
 
   return (
     <div
-      className={`p-4 m-4 rounded-md bg-gray-200 dark:bg-gray-700 h-fit overflow-hidden shadow-lg`}
+      className={`p-4 m-4 rounded-md bg-gray-200 dark:bg-gray-700 h-fit overflow-hidden shadow-lg}`}
     >
       {importance && (
         <p
@@ -99,13 +107,21 @@ const Task = ({ name, range, details, date, exactDay, preview, id }) => {
           {details}
         </p>
       )}
-      {!preview && (
+      {!preview && !completed ? (
         <div className="grid grid-cols-2 justify-items-center mt-6">
           <ImgButton
             src={CompleteIcon}
             alt={`complete-icon`}
             onClick={handleComplete}
           />
+          <ImgButton
+            src={DeleteIcon}
+            alt={`delete-icon`}
+            onClick={handleDelete}
+          />
+        </div>
+      ) : (
+        <div className="mt-6 flex flex-row justify-center">
           <ImgButton
             src={DeleteIcon}
             alt={`delete-icon`}

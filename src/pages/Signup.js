@@ -15,7 +15,7 @@ const Signup = () => {
       <div className="sm:grid sm:grid-cols-2">
         <FormSignup />
         <ClickableWindow
-          title={`If you have an account`}
+          title={`Click to log in`}
           onClick={() => navigate("/login")}
           text={`Go to the login page if you already have an account on our website`}
         />

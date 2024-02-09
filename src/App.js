@@ -11,9 +11,9 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Create from "./pages/Create";
 import Tasks from "./pages/Tasks";
-import { useAuthContext } from "./hooks/useAuthContext";
 
 // hooks
+import { useAuthContext } from "./hooks/useAuthContext";
 
 function App() {
   const [darkTheme, setDarkTheme] = useState(

@@ -15,7 +15,7 @@ const Login = () => {
       <div className="sm:grid sm:grid-cols-2">
         <FormLogin />
         <ClickableWindow
-          title={`If you don't have an account`}
+          title={`Click to make an account`}
           onClick={() => navigate("/signup")}
           text={`Registering in a task management application offers numerous benefits:`}
           list={[
