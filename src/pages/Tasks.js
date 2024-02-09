@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 // components
@@ -13,6 +13,9 @@ import Task from "../components/Task";
 import FilterComponent from "../components/FilterComponent";
 
 const Tasks = () => {
+  const [range, setRange] = useState(5);
+  const [activeFilter, setActiveFilter] = useState(false);
+
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -26,11 +29,24 @@ const Tasks = () => {
     <>
       {!isPending && (
         <>
-          <FilterComponent />
+          <FilterComponent
+            setRange={setRange}
+            range={range}
+            setActive={setActiveFilter}
+            active={activeFilter}
+          />
           <div className="sm:grid sm:grid-cols-2">
             <div>
               {documents &&
-                documents.map((item) => <Task key={item.id} {...item} />)}
+                documents.map((item) => {
+                  if (activeFilter) {
+                    if (range === item.range) {
+                      return <Task key={item.id} {...item} />;
+                    }
+                  } else {
+                    return <Task key={item.id} {...item} />;
+                  }
+                })}
             </div>
             <ClickableWindow
               title={`Add more tasks!`}
