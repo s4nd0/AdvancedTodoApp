@@ -11,6 +11,7 @@ import { useCollection } from "../hooks/useCollection";
 import LoadingComponent from "../components/LoadingComponent";
 import Task from "../components/Task";
 import FilterComponent from "../components/FilterComponent";
+import ErrorText from "../components/ErrorText";
 
 const Tasks = () => {
   const [activeFilter, setActiveFilter] = useState(false);
@@ -85,7 +86,7 @@ const Tasks = () => {
         </>
       )}
       {isPending && <LoadingComponent padding={true} />}
-      {error && <MainText text={error} />}
+      {error && <ErrorText text={error} />}
     </>
   );
 };

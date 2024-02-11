@@ -24,7 +24,7 @@ const Task = ({
   const [importance, setImportance] = useState("");
 
   const styles1 =
-    "bg-green-600 text-center text-xl text-white py-2 px-4  rounded-lg";
+    "bg-green-600 text-center text-xl text-white py-2 px-4 rounded-lg";
   const styles2 =
     "bg-lime-600 text-center text-xl text-white py-2 px-4 rounded-lg";
   const styles3 =
@@ -33,6 +33,8 @@ const Task = ({
     "bg-orange-600 text-center text-xl text-white py-2 px-4 rounded-lg";
   const styles5 =
     "bg-red-600 text-center text-xl text-white py-2 px-4 rounded-lg";
+  const stylesDone =
+    "bg-green-300 dark:bg-green-800 text-center text-xl text-white py-2 px-4 rounded-lg";
 
   const handleDate = (seconds) => {
     const time = new Date(seconds * 1000);
@@ -74,9 +76,11 @@ const Task = ({
 
   return (
     <div
-      className={`p-4 m-4 rounded-md bg-gray-200 dark:bg-gray-700 h-fit overflow-hidden shadow-lg}`}
+      className={`p-4 m-4 rounded-md h-fit overflow-hidden shadow ${
+        completed && "bg-green-200 dark:bg-green-700"
+      } bg-gray-200 dark:bg-gray-700`}
     >
-      {importance && (
+      {importance && !completed ? (
         <p
           className={
             importance === "Insignificant"
@@ -92,10 +96,13 @@ const Task = ({
         >
           {importance}
         </p>
+      ) : (
+        importance && completed && <p className={stylesDone}>{importance}</p>
       )}
       <h2 className="text-2xl mt-2">{name && name}</h2>
       <p className="mt-2">
         {date &&
+          !completed &&
           (exactDay
             ? `To be completed  ${preview ? date : handleDate(date.seconds)}`
             : `To be completed by ${
@@ -121,13 +128,15 @@ const Task = ({
           />
         </div>
       ) : (
-        <div className="mt-6 flex flex-row justify-center">
-          <ImgButton
-            src={DeleteIcon}
-            alt={`delete-icon`}
-            onClick={handleDelete}
-          />
-        </div>
+        completed && (
+          <div className="mt-6 flex flex-row justify-center">
+            <ImgButton
+              src={DeleteIcon}
+              alt={`delete-icon`}
+              onClick={handleDelete}
+            />
+          </div>
+        )
       )}
     </div>
   );

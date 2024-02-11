@@ -4,7 +4,7 @@ const ClickableWindow = ({ title, text, onClick, list, footer }) => {
   return (
     <div
       onClick={onClick}
-      className="cursor-pointer p-6 m-4 rounded-md shadow-lg bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 duration-100 ease-in-out h-fit"
+      className="cursor-pointer p-6 m-4 rounded-md border-2 border-gray-800 dark:border-white shadow bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 duration-100 ease-in-out h-fit"
     >
       {title && <p className="text-2xl text-center">{title}</p>}
       {text && <p className="my-2 text-lg">{text}</p>}

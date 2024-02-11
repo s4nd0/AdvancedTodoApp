@@ -40,7 +40,18 @@ const Home = () => {
       <MainText
         text={`Hello ${user.displayName}, here are your tasks for today. If you don't have one, create some!`}
       />
-      <div className="sm:grid sm:grid-cols-2">
+      <div className="sm:grid sm:grid-cols-2 mb-20">
+        <div>
+          {documents &&
+            documents.map((item) => {
+              if (handleIsToday(item.date.seconds)) {
+                return <Task key={item.id} {...item} />;
+              }
+              return null;
+            })}
+          {isPending && <LoadingComponent />}
+          {error && <ErrorText text={error} />}
+        </div>
         <div>
           <ClickableWindow
             title={`View your tasks!`}
@@ -52,17 +63,6 @@ const Home = () => {
             text={`Add your task to be performed and manage it the way you want!`}
             onClick={() => navigate("/create")}
           />
-        </div>
-        <div>
-          {documents &&
-            documents.map((item) => {
-              if (handleIsToday(item.date.seconds) && !item.completed) {
-                return <Task key={item.id} {...item} />;
-              }
-              return null;
-            })}
-          {isPending && <LoadingComponent />}
-          {error && <ErrorText text={error} />}
         </div>
       </div>
     </>

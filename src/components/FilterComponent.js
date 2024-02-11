@@ -25,7 +25,7 @@ const FilterComponent = ({
   };
 
   return (
-    <div className="flex flex-col justify-start p-4 m-4 mb-0 rounded-md bg-gray-200 dark:bg-gray-700 shadow-lg overflow-hidden text-center text-xl h-fit">
+    <div className="flex flex-col justify-start p-4 m-4 mb-0 rounded-md bg-gray-200 dark:bg-gray-700 shadow overflow-hidden text-center text-xl h-fit">
       <div
         onClick={handleActive}
         className={`flex flex-row items-center cursor-pointer ${
